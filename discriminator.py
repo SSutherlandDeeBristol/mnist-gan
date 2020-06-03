@@ -38,12 +38,12 @@ class Discriminator(nn.Module):
         )
         self.bn3 = nn.BatchNorm2d(self.conv3.out_channels)
 
-        self.fc1 = nn.Linear(self.conv3.out_channels * math.ceil(image_height/8) * math.ceil(image_width/8),10)
+        self.fc1 = nn.Linear(self.conv3.out_channels * math.ceil(image_height/8) * math.ceil(image_width/8),1)
 
     def forward(self, input):
-        x = F.leaky_relu(self.conv1(input),0.2)
-        x = F.leaky_relu(self.conv2(x), 0.2)
-        x = F.leaky_relu(self.conv3(x), 0.2)
+        x = F.leaky_relu(self.bn1(self.conv1(input)),0.2)
+        x = F.leaky_relu(self.bn2(self.conv2(x)), 0.2)
+        x = F.leaky_relu(self.bn3(self.conv3(x)), 0.2)
         x = torch.flatten(x,start_dim=1)
-        x = F.leaky_relu(self.fc1(x),0.2)
+        x = F.sigmoid(self.fc1(x))
         return x
