@@ -15,7 +15,7 @@ from torchvision import transforms
 torch.backends.cudnn.benchmark = True
 
 parser = argparse.ArgumentParser(
-    description="Train a simple CNN on CIFAR-10",
+    description="Train a simple CNN on MNIST",
     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
 )
 default_dataset_dir = Path.home() / ".cache" / "torch" / "datasets"
